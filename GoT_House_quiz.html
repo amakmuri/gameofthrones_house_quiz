@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  
+  <link href='https://fonts.googleapis.com/css?family=Cinzel:400,700' rel='stylesheet' type='text/css'>
+  
+  
+  <style type="text/css">
+  .gentheme{
+      color:white;
+      background-image: url('http://cdn1.vox-cdn.com/assets/4229567/game-of-thrones-poster_85627-1920x1200.jpg');
+      background-size:cover;
+      font-family:Cinzel
+    }
+    .blackbtn{
+      background-color: black;
+      margin:10px
+    }
+    .isize{
+      height:400px;
+    }
+  
+  </style>
+  
+  
+   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body class="gentheme">
+  <h1 class="text-center" style="margin-top:100px;margin-bottom:100px"> What Game of Thrones house should you be in? </h1>
+  <div id="container">
+  <!-- 
+  <div id="question"></div>
+      option ids will be added by jquery in random order: 
+> -->
+  </div>
+  <script src="https://code.jquery.com/jquery-2.2.3.js"
+        integrity="sha256-laXWtGydpwqJ8JA+X9x2miwmaiKhn8tVmOVEigRNtP4="
+          crossorigin="anonymous"></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js'></script>
+
+  <script>
+    var result=0;
+
+    var question1 = {
+//       id: 1,
+      title: "When is violence acceptable?",
+      options: ['If necessary to protect a loved one','When it feels right','When I am taking spoils','When it serves my goal']
+    };
+
+      var question2 = {
+//        id: 2,
+        title:"What's your favorite animal?",
+        options: ['direwolf','stag','dragon','lion']
+      };
+
+    var question3 = {
+//       id: 3,
+      title:"What season do you like the best",
+      options: ['winter','autumn','spring','summer']
+    };
+
+    var question4 = {
+//       id: 4,
+      title: "What is your hair color?",
+      options: ['auburn','black','silver','blond']
+    };
+
+    var question5 = {
+//       //id: 5,
+      title:"What gods do you believe in?",
+      options: ['Old Gods of the Forest','Lord of the Light','Valyrian','Faith of the Seven']
+      };
+    //var question5 = "What coat of arms do you best identify with?";
+      //var options5 = {st:'X', ba:'x', ta:'x', la:'x'};
+    //var question5 = "What words do you best identify with?";
+      //var options5 = {st:'X', ba:'x', ta:'x', la:'x'};
+
+    var questions = [question1, question2, question3, question4, question5] //array of strings
+
+    //ask questions and show buttons *w/images or text with event listeners, displayed in a random order
+    //once user clicks, go to next page using clear div
+
+    //var questionId = 0; //ID for which question/options pair we're on
+
+//     questions[questionId]['options'][0]
+//     questions[0]['options'][0]
+//     ^ questions array , first question, options of first Question, 1st option
+
+    var addContent = function(questionId) {
+      var shuffled_ids = _.shuffle([0,1,2,3]);
+      //var addOption = $('#container').append('<div id="0" class="option col-md-2 col-md-offset-5"><button class="blackbtn btn" value="0">' + questions[questionId]['options'][0] + '</button></div><br />');
+      //var randomColor = '#' + Math.random().toString(16).slice(2,8);
+      $('#container').append('<div id="question" class="text-center col-md-6 center col-md-offset-3"><h3>'+ questions[questionId]['title']+'</h3></div>');
+      //*loop items below (id and options id), put them in random order
+      //change the numbers both to ids
+      for (var i=0; i<shuffled_ids.length; i++) {
+        console.log('shuffled id: '+ shuffled_ids[i]);
+        $('#container').append('<div id="'+ shuffled_ids[i] +'" class="option col-md-2 col-md-offset-5"><button class="blackbtn btn" value='+ shuffled_ids[i]+'>' + questions[questionId]['options'][shuffled_ids[i]] + '</button></div><br />');
+
+        // $('#container').append('<div id="0" class="option col-md-2 col-md-offset-5"><button class="blackbtn btn" value="0">' + questions[questionId]['options'][0] + '</button></div><br />');
+        // $('#container').append('<div id="1" class="option col-md-2 col-md-offset-5"><button class="blackbtn btn" value="1">' + questions[questionId]['options'][1] + '</button></div><br />');
+        // $('#container').append('<div id="2" class="option col-md-2 col-md-offset-5"><button class="blackbtn btn" value="2">' + questions[questionId]['options'][2] + '</button></div><br />');
+        // $('#container').append('<div id="3" class="option col-md-2 col-md-offset-5"><button class="blackbtn btn" value="3">' + questions[questionId]['options'][3] + '</button></div>');
+    }
+      //console.log(questions[questionId]['options'][0]);
+      questionId ++;
+    };
+    
+    var result = 0;
+    
+    var addListener = function(i, l) {
+        $('button').click(function(){
+            result += 1 + parseInt($(this).attr('value')); //"this" is always 0
+            //console.log($(this));
+            //console.log("result: "+ result);
+            i++;
+            displayQuestions (i, l);
+            if (i>3) {
+            showResult();
+            }
+        });
+    }
+    
+    var displayQuestions = function ( index, len) {
+        if (index<len){
+            $('#container').empty();
+            addContent(index);
+            addListener(index, len);
+            //uncomment the line below to test out the result variable
+//            alert(result);
+        }
+    }
+    
+    displayQuestions(0, questions.length);
+    
+
+   var resultsToDisplay = [
+     {
+        content: "You're kinda cool",
+        images: 'https://dimitrijesimonovic.files.wordpress.com/2014/04/519e2f2ec93fb24963.jpg?w=2000&h=',
+        api_id: 362
+      },
+      {
+        content: "You suck",
+        images: 'https://dimitrijesimonovic.files.wordpress.com/2014/04/the-images-of-multicolor-game-of-thrones-tv-series-house-baratheon-games-images-game-of-thrones-hd-wallpaper.jpg?w=2000&h=',
+        api_id: 16
+      },
+      {
+        content: "You're awesome",
+        images: 'http://www.pixelstalk.net/wp-content/uploads/2015/11/game-of-thrones-background-picture-new-best-hd-wallpapers-free.jpg',
+        api_id: 378
+      },
+    {
+        content: "You're kinda cool",
+        images: 'https://dimitrijesimonovic.files.wordpress.com/2014/04/house-lannister-house-lannister-31720461-1920-1080.jpg?w=2000&h=',
+        api_id: 229
+      },
+    ];
+
+
+    
+  var showResult = function() {
+      $('#container').empty();
+      var id;
+      if (result <= 4 ) {id = 0;} 
+      else if (result <= 9) {id = 1;}
+      else if (result <= 12) {id = 2;}
+      else if (result <= 16) {id = 3;}
+      else {id = "error";};
+       
+      if (id == "error") {
+         $('#container').append('div id="result" class="col-md-6 col-md-offset-3"><h2>You have no house, try again :(</h2></div>')
+      }
+      else {
+      $('#container').append('<div id="result" class="col-md-6 col-md-offset-3"><h2>' + 
+                               'You belong in the... <br><h1>' + house_data[id]["name"] + '!!!!</h1><br><h3>' +
+                               'You are from...' + house_data[id]["region"] +' region.<br>'+ house_data[id]["words"] + '!!!!!!!!!</h3><br>'+
+                               '<img class="isize" src="' + resultsToDisplay[id]["images"] + '"/></h2></div>');
+      }
+    };
+  
+  
+  //the following data was copy/pasted from An Api of Ice and Fire
+  var house_data = [
+  //st:
+  {
+    "url": "https://anapioficeandfire.com/api/houses/362",
+    "name": "House Stark of Winterfell",
+    "region": "The North",
+    "coatOfArms": "A running grey direwolf, on an ice-white field",
+    "words": "Winter is Coming",
+    "titles": [
+      "King in the North",
+      "Lord of Winterfell",
+      "Warden of the North",
+      "King of the Trident"
+    ],
+    "seats": ["Scattered (formerly Winterfell)"],
+    "currentLord": "",
+    "heir": "",
+    "overlord": "https://anapioficeandfire.com/api/houses/16",
+    "founded": "Age of Heroes",
+    "founder": "https://anapioficeandfire.com/api/characters/209",
+    "diedOut": "",
+    "ancestralWeapons": ["Ice"]
+  },
+  //ba: 
+  {
+    "url": "https://anapioficeandfire.com/api/houses/16",
+    "name": "House Baratheon of King's Landing",
+    "region": "The Crownlands",
+    "coatOfArms": "A black crowned stag and a gold lion, combatant, on a per pale gold and crimson field(Per pale or and gules, a stag, crowned, sable and a lion of the first combatant)",
+    "words": "",
+    "titles": ["Lord of the Seven Kingdoms"],
+    "seats": [
+      "King's Landing"
+    ],
+    "currentLord": "https://anapioficeandfire.com/api/characters/1029",
+    "heir": "https://anapioficeandfire.com/api/characters/775",
+    "overlord": "https://anapioficeandfire.com/api/houses/15",
+    "founded": "283 AC",
+    "founder": "https://anapioficeandfire.com/api/characters/901",
+    "diedOut": "",
+    "ancestralWeapons": [],
+    "cadetBranches": []
+  },
+  //ta: 
+  {
+    "url": "https://anapioficeandfire.com/api/houses/378",
+    "name": "House Targaryen of King's Landing",
+    "region": "The Crownlands",
+    "coatOfArms": "Sable, a dragon thrice-headed gules",
+    "words": "Fire and Blood",
+    "titles": [
+      "King of the Andals, the Rhoynar and the First Men",
+      "Lord of the Seven Kingdoms",
+      "Prince of Summerhall"
+    ],
+    "seats": [
+      "Red Keep (formerly)",
+      "Summerhall (formerly)"
+    ],
+    "currentLord": "https://anapioficeandfire.com/api/characters/1303",
+    "heir": "",
+    "overlord": "",
+    "founded": "House Targaryen: >114 BCHouse Targaryen of King's Landing:1 AC",
+    "founder": "",
+    "diedOut": "",
+    "ancestralWeapons": [
+      "Blackfyre",
+      "Dark Sister"
+    ],
+    "cadetBranches": [
+      "https://anapioficeandfire.com/api/houses/23"
+    ]
+  //removed swornMembers
+  },
+  //la: 
+  {
+    "url": "https://anapioficeandfire.com/api/houses/229",
+    "name": "House Lannister of Casterly Rock",
+    "region": "The Westerlands",
+    "coatOfArms": "A gold lion, on a crimson field(Gules, a lion or)",
+    "words": "Hear Me Roar!",
+    "titles": [
+      "King of the Rock (formerly) Lord of Casterly Rock",
+      "Shield of Lannisport",
+      "Warden of the West"
+    ],
+    "seats": [
+      "Casterly Rock"
+    ],
+    "currentLord": "https://anapioficeandfire.com/api/characters/238",
+    "heir": "",
+    "overlord": "https://anapioficeandfire.com/api/houses/16",
+    "founded": "Age of Heroes",
+    "founder": "https://anapioficeandfire.com/api/characters/615",
+    "diedOut": "",
+    "ancestralWeapons": ["Brightroar"]
+  }
+] //closing brace for data from api
+
+    
+    //*nice transition
+    //change result variable based on answer
+    //call the API to get the hosue info and display it
+    //*change it to the opposite if you want hehe :3
+    //*funny/sarcastic questions and answers
+    //*nice transition
+    //can store all responses later
+
+    //useful keys in object:
+
+    //Stark (0) 0-4 , id = 362 , http://anapioficeandfire.com/api/houses?name=House%20Stark%20of%20Winterfell
+    //Baratheon (1) 5-8 , id = 16 (check if it's 15)
+    //Targaryen (2) 9-12, id = 378
+    //Lannister (3) 13-16 , id = 229 , http://anapioficeandfire.com/api/houses?name=House%20Lannister%20of%20Casterly%20Rock
+
+
+// api has cross-origin error; TBD
+// var get_data= {
+//     url: 'https://anapioficeandfire.com/api/houses/',
+//     initialize: function(id){
+//      this.url += id;
+//      var thatHouse = this;
+//       $.get(this.url, function(data){
+//          thatHouse.attributes = data;
+//       }); //end of get
+//     } //end of initialize
+//   };
+    
+//   console.log(get_data.initialize(362));
+
+
+// the following doesn't work 
+//   var getHouseData = function (api_id){
+//    $.ajax({
+//      method: 'GET',
+//      url: 'https://anapioficeandfire.com/api/houses/',
+//      headers: {
+//        'Access-Control-Allow-Headers': '*',
+//        'Access-Control-Request-Headers': 'x-requested-with'
+//      },
+//      dataType:'jsonp',
+//      crossDomain: true,
+//      success: function(data){
+//        this.url += api_id;
+//        var ajaxHouse = this;
+//        console.log(ajaxHouse);
+//        console.log(this.url);
+//          ajaxHouse.attributes = data;
+//        }   
+//    });
+//  };
+
+
+// getHouseData(362);
+
+
+  </script>
+</body>
+</html>
